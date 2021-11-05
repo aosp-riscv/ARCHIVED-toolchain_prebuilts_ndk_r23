@@ -16,12 +16,8 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef __ASM_X86_BITSPERLONG_H
-#define __ASM_X86_BITSPERLONG_H
-#if defined(__x86_64__) && !defined(__ILP32__)
-#define __BITS_PER_LONG 64
-#else
-#define __BITS_PER_LONG 32
-#endif
+#ifndef _UAPI_ASM_RISCV_BITSPERLONG_H
+#define _UAPI_ASM_RISCV_BITSPERLONG_H
+#define __BITS_PER_LONG (__SIZEOF_POINTER__ * 8)
 #include <asm-generic/bitsperlong.h>
 #endif

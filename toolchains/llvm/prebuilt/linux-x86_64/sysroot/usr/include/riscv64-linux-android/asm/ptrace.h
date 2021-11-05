@@ -16,56 +16,61 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _UAPI_ASM_X86_PTRACE_H
-#define _UAPI_ASM_X86_PTRACE_H
-#include <linux/compiler.h>
-#include <asm/ptrace-abi.h>
-#include <asm/processor-flags.h>
+#ifndef _UAPI_ASM_RISCV_PTRACE_H
+#define _UAPI_ASM_RISCV_PTRACE_H
 #ifndef __ASSEMBLY__
-#ifdef __i386__
-struct pt_regs {
-  long ebx;
-  long ecx;
-  long edx;
-  long esi;
-  long edi;
-  long ebp;
-  long eax;
-  int xds;
-  int xes;
-  int xfs;
-  int xgs;
-  long orig_eax;
-  long eip;
-  int xcs;
-  long eflags;
-  long esp;
-  int xss;
+#include <linux/types.h>
+struct user_regs_struct {
+  unsigned long pc;
+  unsigned long ra;
+  unsigned long sp;
+  unsigned long gp;
+  unsigned long tp;
+  unsigned long t0;
+  unsigned long t1;
+  unsigned long t2;
+  unsigned long s0;
+  unsigned long s1;
+  unsigned long a0;
+  unsigned long a1;
+  unsigned long a2;
+  unsigned long a3;
+  unsigned long a4;
+  unsigned long a5;
+  unsigned long a6;
+  unsigned long a7;
+  unsigned long s2;
+  unsigned long s3;
+  unsigned long s4;
+  unsigned long s5;
+  unsigned long s6;
+  unsigned long s7;
+  unsigned long s8;
+  unsigned long s9;
+  unsigned long s10;
+  unsigned long s11;
+  unsigned long t3;
+  unsigned long t4;
+  unsigned long t5;
+  unsigned long t6;
 };
-#else
-struct pt_regs {
-  unsigned long r15;
-  unsigned long r14;
-  unsigned long r13;
-  unsigned long r12;
-  unsigned long rbp;
-  unsigned long rbx;
-  unsigned long r11;
-  unsigned long r10;
-  unsigned long r9;
-  unsigned long r8;
-  unsigned long rax;
-  unsigned long rcx;
-  unsigned long rdx;
-  unsigned long rsi;
-  unsigned long rdi;
-  unsigned long orig_rax;
-  unsigned long rip;
-  unsigned long cs;
-  unsigned long eflags;
-  unsigned long rsp;
-  unsigned long ss;
+struct __riscv_f_ext_state {
+  __u32 f[32];
+  __u32 fcsr;
 };
-#endif
+struct __riscv_d_ext_state {
+  __u64 f[32];
+  __u32 fcsr;
+};
+struct __riscv_q_ext_state {
+  __u64 f[64] __attribute__((aligned(16)));
+  __u32 fcsr;
+  __u32 reserved[3];
+};
+union __riscv_fp_state {
+  struct __riscv_f_ext_state f;
+  struct __riscv_d_ext_state d;
+  struct __riscv_q_ext_state q;
+};
 #endif
 #endif
